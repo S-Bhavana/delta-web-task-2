@@ -6,6 +6,10 @@
 
 - DArk : Echo Sector is a top-down combat game built using HTML, CSS, JavaScript, and the HTML Canvas API.
 
+# LIVE PAGE
+
+https://s-bhavana.github.io/delta-web-task-2/
+
 ## Features
 
 ### Player
