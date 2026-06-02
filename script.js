@@ -16,7 +16,9 @@ let player = {
 let enemies = [];
 
 let bullets = [];
+let loot = [];
 let score = 0;
+let currency = 0;
 let gameTimer = 120;
 
 let wall = {
@@ -36,6 +38,11 @@ let door = {
 let gameOver = false;
 let isPaused = false;
 let gameWon = false;
+
+let speedBoostActive = false;
+let speedBoostTimer = 0;
+let shopOpen = false;
+
 let currentRoom = 1;
 let player_position_x = 0;
 let player_position_y = 0;
@@ -52,8 +59,56 @@ document.addEventListener("keydown", function(event) {
         isPaused = !isPaused;
     }
 
+    if(event.key.toLowerCase() === "b"){
+    shopOpen = !shopOpen;
+}
+
     if(event.key.toLowerCase() === "r" && gameOver || gameWon){
     restartGame();
+}
+
+if(shopOpen){
+
+    if(event.key === "1"){
+
+        if(currency >= 20){
+
+            currency -= 20;
+
+            player.health += 20;
+
+            if(player.health > 100){
+                player.health = 100;
+            }
+        }
+    }
+
+    if(event.key === "2"){
+
+        if(currency >= 30){
+
+            currency -= 30;
+
+            player.speed += 1;
+        }
+    }
+
+    if(shopOpen){
+
+    if(event.key === "3"){
+
+        if(currency >= 40){
+
+            currency -= 40;
+
+            speedBoostActive = true;
+
+            speedBoostTimer = 600;
+
+            player.speed = 10;
+        }
+    }
+}
 }
 
 });
@@ -183,6 +238,14 @@ if(enemy.health <= 0 && enemy.state !== "dead"){
     enemy.state = "dead";
 
     score += 10;
+    currency += 5;
+
+     loot.push({
+        x: enemy.x,
+        y: enemy.y,
+        value: 10
+    });
+    console.log("Loot Dropped");
 }
 
 if(enemy.state === "dead"){
@@ -304,6 +367,50 @@ function drawBullets(){
 
 }
 
+function drawLoot(){
+
+    console.log(loot.length);
+
+    ctx.fillStyle = "gold";
+
+    for(let item of loot){
+
+        ctx.beginPath();
+
+        ctx.arc(
+            item.x,
+            item.y,
+            10,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+}
+
+function updateLoot(){
+
+    for(let i = loot.length - 1; i >= 0; i--){
+
+        let item = loot[i];
+
+        if(
+
+            player.x < item.x + 10 &&
+            player.x + player.width > item.x &&
+            player.y < item.y + 10 &&
+            player.y + player.height > item.y
+
+        ){
+
+            currency += item.value;
+
+            loot.splice(i,1);
+        }
+    }
+}
+
 function drawHUD(){
 
     ctx.fillText(
@@ -347,6 +454,19 @@ function drawHUD(){
     210
 );
 
+ctx.fillText(
+    "Currency: " + currency,
+    20,
+    240
+);
+
+ctx.fillText(
+    "Speed Boost: " +
+    (speedBoostActive ? "ON" : "OFF"),
+    20,
+    240
+);
+
 }
 
 function drawRoomText(){
@@ -361,6 +481,50 @@ function drawRoomText(){
         40
     );
 
+}
+
+function drawShop(){
+
+    if(!shopOpen){
+        return;
+    }
+
+    ctx.fillStyle = "rgba(0,0,0,0.8)";
+    ctx.fillRect(150,100,500,300);
+
+    ctx.fillStyle = "white";
+    ctx.font = "30px Arial";
+
+    ctx.fillText(
+        "SHOP",
+        320,
+        150
+    );
+
+    ctx.font = "20px Arial";
+
+    ctx.fillText(
+        "1 - Heal +20 HP (20 Coins)",
+        180,
+        220
+    );
+
+    ctx.fillText(
+        "3 - Speed Boost (40 Coins)",
+        180,
+        320
+    );
+    ctx.fillText(
+        "2 - Speed Upgrade (30 Coins)",
+        180,
+        270
+    );
+
+    ctx.fillText(
+        "Currency: " + currency,
+        180,
+        330
+    );
 }
 
 function updatePlayer() {
@@ -469,6 +633,14 @@ if(aliveEnemies.length === 0){
         canvas.height/2
     );
 
+     ctx.fillText(
+        "Final Score: " + score,
+        canvas.width/2 - 100,
+        canvas.height/2 + 60
+    );
+
+    requestAnimationFrame(main_game_loop);
+
  return;
 }
 
@@ -533,10 +705,22 @@ if(isPaused){
         canvas.height
     );
 
+    if(speedBoostActive){
+
+    speedBoostTimer--;
+
+    if(speedBoostTimer <= 0){
+
+        speedBoostActive = false;
+
+        player.speed = 5;
+    }
+}
 
     updatePlayer();
     updateEnemies();
     updateBullets();
+    updateLoot();
 
     drawWall();
     drawDoor();
@@ -544,9 +728,10 @@ if(isPaused){
     drawPlayer();
     drawEnemies();
     drawBullets();
-
+    drawLoot();
     drawHUD();
     drawRoomText();
+    drawShop();
 
     requestAnimationFrame(main_game_loop);
 }
@@ -556,6 +741,7 @@ function restartGame(){
     player.health = 100;
 
     score = 0;
+    currency = 0;
 
     gameTimer = 120;
 
