@@ -116,14 +116,14 @@ function drawEnemies(){
         ctx.fillRect(enemy.x, enemy.y, enemy.width,  enemy.height);
 
         ctx.fillStyle = "white";
-ctx.font = "12px Arial";
+        ctx.font = "12px Arial";
 
-ctx.fillText(enemy.state, enemy.x,   enemy.y - 10);
+        ctx.fillText(enemy.state, enemy.x,   enemy.y - 10);
     }
 
 }
 
-function drawWall(){
+function drawWall(){ 
 
     ctx.fillStyle = "gray";
 
@@ -133,14 +133,14 @@ function drawWall(){
 
 function drawDoor(){
 
-     let aliveEnemies =
-    enemies.filter(e => e.state !== "dead");
+     let aliveEnemies =  enemies.filter(e => e.state !== "dead");
 
     if(aliveEnemies.length > 0){
 
         ctx.fillStyle = "red";
 
-    }else{
+    }
+    else{
 
     ctx.fillStyle = "green";
     }
@@ -429,17 +429,9 @@ if(gameOver){
 
      ctx.font = "25px Arial";
 
-      ctx.fillText(
-        "Final Score: " + score,
-        canvas.width/2 - 80,
-        canvas.height/2 + 50
-    );
+      ctx.fillText( "Final Score: " + score, canvas.width/2 - 80, canvas.height/2 + 50);
 
-ctx.fillText(
-    "Press R To Restart",
-    canvas.width/2 - 120,
-    canvas.height/2 + 90
-);
+ctx.fillText("Press R To Restart", canvas.width/2 - 120, canvas.height/2 + 90);
     requestAnimationFrame(main_game_loop);
     return;
 }
@@ -449,22 +441,13 @@ if(isPaused){
     ctx.fillStyle = "white";
     ctx.font = "50px Arial";
 
-    ctx.fillText(
-        "PAUSED",
-        canvas.width/2 - 100,
-        canvas.height/2
-    );
+    ctx.fillText( "PAUSED", canvas.width/2 - 100, canvas.height/2);
 
     requestAnimationFrame(main_game_loop);
     return;
 }
 
- ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+ ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 
     updatePlayer();
