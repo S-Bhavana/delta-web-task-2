@@ -378,15 +378,15 @@ function updateLoot(){
 
 function drawHUD(){
 
+    ctx.fillStyle = "white";
+
+    ctx.font = "24px Arial";
+    
     ctx.fillText(
         "Player Health: " + Math.floor(player.health),
         20,
         30
     );
-
-    ctx.fillStyle = "white";
-
-    ctx.font = "24px Arial";
 
     ctx.fillText( "Enemies Alive: " +  enemies.filter(e => e.state !== "dead").length,  20,  60);
 
@@ -400,7 +400,7 @@ function drawHUD(){
 
 ctx.fillText("Currency: " + currency,20,240);
 
-ctx.fillText("Speed Boost: " + (speedBoostActive ? "ON" : "OFF"), 20, 240);
+ctx.fillText("Speed Boost: " + (speedBoostActive ? "ON" : "OFF"), 20, 270);
 
 }
 
@@ -484,6 +484,8 @@ function updatePlayer() {
     player.y = 100;
 
 }
+    player_position_x = player.x;
+    player_position_y = player.y;
 }
 
 function darkSpaceVector_add(a,b){
