@@ -398,7 +398,11 @@ function drawHUD(){
 
     ctx.fillText("Time: " + gameTimer,20,210);
 
-ctx.fillText("Currency: " + currency,20,240);
+    ctx.fillText("Currency: " + currency,20,270);
+
+    ctx.fillText("Speed Boost: " + (speedBoostActive ? "ON" : "OFF"),20,300);
+
+    console.log(player_position_x, player_position_y);
 
 }
 
