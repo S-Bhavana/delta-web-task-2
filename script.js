@@ -400,8 +400,6 @@ function drawHUD(){
 
 ctx.fillText("Currency: " + currency,20,240);
 
-ctx.fillText("Speed Boost: " + (speedBoostActive ? "ON" : "OFF"), 20, 240);
-
 }
 
 function drawRoomText(){
