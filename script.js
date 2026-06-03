@@ -156,12 +156,7 @@ setInterval(function(){
 
 function drawPlayer() {
     ctx.fillStyle = "blue";
-    ctx.fillRect(
-        player.x,
-        player.y,
-        player.width,
-        player.height
-    );
+    ctx.fillRect( player.x,  player.y, player.width, player.height);
 }
 
 function drawEnemies(){
@@ -174,21 +169,12 @@ function drawEnemies(){
 
         ctx.fillStyle = "red";
 
-        ctx.fillRect(
-            enemy.x,
-            enemy.y,
-            enemy.width,
-            enemy.height
-        );
+        ctx.fillRect( enemy.x, enemy.y, enemy.width, enemy.height);
 
         ctx.fillStyle = "white";
-ctx.font = "12px Arial";
+        ctx.font = "12px Arial";
 
-ctx.fillText(
-    enemy.state,
-    enemy.x,
-    enemy.y - 10
-);
+        ctx.fillText( enemy.state, enemy.x, enemy.y - 10);
     }
 
 }
@@ -197,35 +183,25 @@ function drawWall(){
 
     ctx.fillStyle = "gray";
 
-    ctx.fillRect(
-        wall.x,
-        wall.y,
-        wall.width,
-        wall.height
-    );
+    ctx.fillRect( wall.x, wall.y, wall.width, wall.height);
 
 }
 
 function drawDoor(){
 
-     let aliveEnemies =
-    enemies.filter(e => e.state !== "dead");
+     let aliveEnemies = enemies.filter(e => e.state !== "dead");
 
     if(aliveEnemies.length > 0){
 
         ctx.fillStyle = "red";
 
-    }else{
+    }
+    else{
 
     ctx.fillStyle = "green";
     }
 
-    ctx.fillRect(
-        door.x,
-        door.y,
-        door.width,
-        door.height
-    );
+    ctx.fillRect( door.x, door.y,  door.width, door.height );
 
 }
 
@@ -356,12 +332,7 @@ function drawBullets(){
 
     for(let bullet of bullets){
 
-        ctx.fillRect(
-            bullet.x,
-            bullet.y,
-            bullet.size,
-            bullet.size
-        );
+        ctx.fillRect( bullet.x, bullet.y, bullet.size, bullet.size);
 
     }
 
@@ -377,13 +348,7 @@ function drawLoot(){
 
         ctx.beginPath();
 
-        ctx.arc(
-            item.x,
-            item.y,
-            10,
-            0,
-            Math.PI * 2
-        );
+        ctx.arc( item.x, item.y, 10, 0, Math.PI * 2 );
 
         ctx.fill();
     }
@@ -423,49 +388,19 @@ function drawHUD(){
 
     ctx.font = "24px Arial";
 
-    ctx.fillText(
-        "Enemies Alive: " +
-         enemies.filter(e => e.state !== "dead").length,
-         20,
-         60
-    );
+    ctx.fillText( "Enemies Alive: " +  enemies.filter(e => e.state !== "dead").length,  20,  60);
 
-    ctx.fillText(
-        "Score: " + score,
-        20,
-        90
-    );
+    ctx.fillText( "Score: " + score, 20, 90);
 
-    ctx.fillText(
-         "X: " + Math.floor(player_position_x),
-         20,
-         120
-    );
+    ctx.fillText( "X: " + Math.floor(player_position_x), 20, 120);
 
-    ctx.fillText(
-         "Y: " + Math.floor(player_position_y),
-         20,
-         150
-    );
+    ctx.fillText("Y: " + Math.floor(player_position_y),20,150 );
 
-    ctx.fillText(
-    "Time: " + gameTimer,
-    20,
-    210
-);
+    ctx.fillText("Time: " + gameTimer,20,210);
 
-ctx.fillText(
-    "Currency: " + currency,
-    20,
-    240
-);
+ctx.fillText("Currency: " + currency,20,240);
 
-ctx.fillText(
-    "Speed Boost: " +
-    (speedBoostActive ? "ON" : "OFF"),
-    20,
-    240
-);
+ctx.fillText("Speed Boost: " + (speedBoostActive ? "ON" : "OFF"), 20, 240);
 
 }
 
@@ -475,11 +410,7 @@ function drawRoomText(){
 
     ctx.font = "30px Arial";
 
-    ctx.fillText(
-        "Room " + currentRoom,
-        canvas.width - 180,
-        40
-    );
+    ctx.fillText("Room " + currentRoom, canvas.width - 180, 40);
 
 }
 
@@ -495,36 +426,16 @@ function drawShop(){
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
 
-    ctx.fillText(
-        "SHOP",
-        320,
-        150
-    );
+    ctx.fillText( "SHOP", 320, 150);
 
     ctx.font = "20px Arial";
 
-    ctx.fillText(
-        "1 - Heal +20 HP (20 Coins)",
-        180,
-        220
-    );
+    ctx.fillText("1 - Heal +20 HP (20 Coins)",180,220);
 
-    ctx.fillText(
-        "3 - Speed Boost (40 Coins)",
-        180,
-        320
-    );
-    ctx.fillText(
-        "2 - Speed Upgrade (30 Coins)",
-        180,
-        270
-    );
+    ctx.fillText( "3 - Speed Boost (40 Coins)", 180, 320);
+    ctx.fillText("2 - Speed Upgrade (30 Coins)",180,270);
 
-    ctx.fillText(
-        "Currency: " + currency,
-        180,
-        330
-    );
+    ctx.fillText("Currency: " + currency,180,330);
 }
 
 function updatePlayer() {
@@ -614,8 +525,7 @@ function darkSpaceVector_normalize(value,max){
 
 function main_game_loop() {
 
-    let aliveEnemies =
-    enemies.filter(enemy => enemy.state !== "dead");
+    let aliveEnemies = enemies.filter(enemy => enemy.state !== "dead");
 
 if(aliveEnemies.length === 0){
 
@@ -627,17 +537,10 @@ if(aliveEnemies.length === 0){
     ctx.fillStyle = "lime";
     ctx.font = "50px Arial";
 
-    ctx.fillText(
-        "YOU WIN",
-        canvas.width/2 - 120,
-        canvas.height/2
+    ctx.fillText("YOU WIN",canvas.width/2 - 120,canvas.height/2
     );
 
-     ctx.fillText(
-        "Final Score: " + score,
-        canvas.width/2 - 100,
-        canvas.height/2 + 60
-    );
+     ctx.fillText( "Final Score: " + score, canvas.width/2 - 100, canvas.height/2 + 60);
 
     requestAnimationFrame(main_game_loop);
 
@@ -660,25 +563,13 @@ if(gameOver){
     ctx.fillStyle = "white";
     ctx.font = "50px Arial";
 
-    ctx.fillText(
-        "GAME OVER",
-        canvas.width/2 - 150,
-        canvas.height/2
-    );
+    ctx.fillText( "GAME OVER", canvas.width/2 - 150, canvas.height/2);
 
      ctx.font = "25px Arial";
 
-      ctx.fillText(
-        "Final Score: " + score,
-        canvas.width/2 - 80,
-        canvas.height/2 + 50
-    );
+      ctx.fillText("Final Score: " + score,canvas.width/2 - 80,canvas.height/2 + 50 );
 
-ctx.fillText(
-    "Press R To Restart",
-    canvas.width/2 - 120,
-    canvas.height/2 + 90
-);
+ctx.fillText( "Press R To Restart", canvas.width/2 - 120, canvas.height/2 + 90);
     requestAnimationFrame(main_game_loop);
     return;
 }
@@ -688,22 +579,13 @@ if(isPaused){
     ctx.fillStyle = "white";
     ctx.font = "50px Arial";
 
-    ctx.fillText(
-        "PAUSED",
-        canvas.width/2 - 100,
-        canvas.height/2
-    );
+    ctx.fillText("PAUSED", canvas.width/2 - 100,  canvas.height/2);
 
     requestAnimationFrame(main_game_loop);
     return;
 }
 
- ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+ ctx.clearRect( 0, 0, canvas.width, canvas.height);
 
     if(speedBoostActive){
 
